@@ -1,5 +1,4 @@
 import socket
-from sys import prefix
 import threading
 import pickle
 from time import sleep, perf_counter
