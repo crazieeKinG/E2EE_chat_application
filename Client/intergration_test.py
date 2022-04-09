@@ -1,5 +1,5 @@
 from IDEA.key_generation import create_key
-from IDEA.idea_algorithm import operate
+from IDEA.idea_algorithm import idea
 
 keys = dict()
 plainText = ""
@@ -21,6 +21,6 @@ def test_key_generation():
 
 def test_encryption_decryption():
     global keys
-    cypherText = operate("Hello! How are you?", keys['encryption_key'])
-    plainText = operate(cypherText, keys['decryption_key'])
+    cypherText = idea("Hello! How are you?", keys['encryption_key'])
+    plainText = idea(cypherText, keys['decryption_key'])
     assert "Hello! How are you?" == plainText.strip()

@@ -4,7 +4,7 @@ from .Operations.multiplication_modulo import multiplication_modulo
 from .Operations.bitwise_xor import bitwise_XOR
 
 
-def operate(input, key):
+def idea(input, key):
     result_text = list()
 
     message_length = len(input)

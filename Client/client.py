@@ -6,7 +6,7 @@ import PySimpleGUI as sg
 
 #Userdefined modules
 from IDEA.key_generation import create_key
-from IDEA.idea_algorithm import operate
+from IDEA.idea_algorithm import idea
 
 from GUI.gui_interface import create_gui
 
@@ -66,7 +66,7 @@ def receive_message():
                     win['selected_user'].update(clients_list)
             else:
                 if data['encryption'] == 'IDEA encryption':
-                    message = operate(data['body'], DECRYPTION_KEY)
+                    message = idea(data['body'], DECRYPTION_KEY)
                 else:
                     message = data['body']
                 clients_messages[data['from']] += f"{data['from']}: {message}\n"
@@ -74,7 +74,7 @@ def receive_message():
                 if not launch and current_selected_user == data['from']:
                     win['message_box'].update(clients_messages[current_selected_user])
             end = perf_counter()
-            print(f"Elapsed time to send (with encryption if any): {end-start}")
+            print(f"Elapsed time to send (with decryption if any): {end-start}")
 
             if launch:
                 launch = False
@@ -88,7 +88,7 @@ def send_message(send_to_user, message, encryption):
     start = perf_counter()
     clients_messages[send_to_user] += f"{USERNAME}: {message}\n"
     if encryption == 'IDEA encryption':
-        message = operate(message, clients_information_list[send_to_user]['key'])
+        message = idea(message, clients_information_list[send_to_user]['key'])
     data = {
         'type': 'message',
         'to': send_to_user,
