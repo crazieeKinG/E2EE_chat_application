@@ -89,7 +89,6 @@ def send_message(send_to_user, message, encryption):
     clients_messages[send_to_user] += f"{USERNAME}: {message}\n"
     if encryption == 'IDEA encryption':
         message = operate(message, clients_information_list[send_to_user]['key'])
-    clients_messages[send_to_user] += f"{USERNAME}: {message}\n"
     data = {
         'type': 'message',
         'to': send_to_user,

@@ -1,4 +1,4 @@
-from math import ceil
+from math import floor
 import random
 
 #Userdefinded modules
@@ -23,9 +23,8 @@ def break_key(key):
     prev_key = 0
     for i in range(16):
         prev_key = (key - prev_key) % (256**(i+1))
-        character = ceil(prev_key / (256**(i)))
+        character = floor(prev_key / (256**(i)))
         key_list.append(character)
-        prev_key += prev_key
     key_list.reverse()
     return key_list
     
