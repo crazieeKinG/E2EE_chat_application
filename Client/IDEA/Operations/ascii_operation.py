@@ -9,6 +9,5 @@ def ascii_to_string(input):
     return actual_string
 
 def convert_16_bit(input):
-    input_16_bit = (input[0] * 256) + input[1]
-    
+    input_16_bit = (input[0] * 256) + input[1]    
     return input_16_bit

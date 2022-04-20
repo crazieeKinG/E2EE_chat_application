@@ -5,7 +5,6 @@ import random
 from IDEA.Operations.multiplication_modulo import multiplication_inverse
 from IDEA.Operations.addition_modulo import addition_inverse
 
-
 def first_key():
     key = list()
     for i in range(16):
@@ -34,7 +33,6 @@ def key_decimal_value(key):
         value += (key[i] * (256**(15-i)))
     return value
 
-
 def create_key():
     key = list()
     key_value = 0
@@ -58,4 +56,3 @@ def create_key():
         next_index = (i + 1) % 9
         decryption_key.append(k1+k2+k3+k4+[key[next_index][8], key[next_index][9], key[next_index][10], key[next_index][11], key[next_index][12], key[next_index][13], key[next_index][14], key[next_index][15]])
     return {'encryption_key': encryption_key, 'decryption_key': decryption_key}
-    

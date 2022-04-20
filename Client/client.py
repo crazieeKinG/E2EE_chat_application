@@ -1,3 +1,4 @@
+from pydoc import plain
 import socket
 import threading
 import pickle
@@ -37,7 +38,6 @@ def receive_message():
     global clients_information_list, clients_list, win, launch, current_selected_user
     while True:
         try:
-            start = perf_counter()
             full_message = b''
             new_msg = True
 
@@ -65,6 +65,7 @@ def receive_message():
                 if not launch:
                     win['selected_user'].update(clients_list)
             else:
+                start = perf_counter()  
                 if data['encryption'] == 'IDEA encryption':
                     message = idea(data['body'], DECRYPTION_KEY)
                 else:
@@ -73,8 +74,9 @@ def receive_message():
 
                 if not launch and current_selected_user == data['from']:
                     win['message_box'].update(clients_messages[current_selected_user])
-            end = perf_counter()
-            print(f"Elapsed time to send (with decryption if any): {end-start}")
+                    print(f"From:{data['from']}\tTo:{data['to']}\tDecryption:{data['encryption']}\tRecieved message:'{data['body']}'\tTranslated message:'{message}'")
+                end = perf_counter()
+                print(f"Elapsed time to receive (with decryption if any): {end-start}")
 
             if launch:
                 launch = False
@@ -85,10 +87,11 @@ def receive_message():
 
 def send_message(send_to_user, message, encryption):
     global clients_information_list, win, current_selected_user, clients_messages, launch
+    plainText = message
     start = perf_counter()
     clients_messages[send_to_user] += f"{USERNAME}: {message}\n"
     if encryption == 'IDEA encryption':
-        message = idea(message, clients_information_list[send_to_user]['key'])
+        message = idea(message, clients_information_list[send_to_user]['key']).strip()
     data = {
         'type': 'message',
         'to': send_to_user,
@@ -96,10 +99,11 @@ def send_message(send_to_user, message, encryption):
         'encryption': encryption,
         'body': message
     }
+    end = perf_counter()
+    print(f"From:{data['from']}\tTo:{data['to']}\tEncryption:{data['encryption']}\tSent message:'{data['body']}'\tTranslated message:'{plainText}'")
     client_socket.send(transfrom_json_to_bytes(data))
     if not launch and current_selected_user == send_to_user:
         win['message_box'].update(clients_messages[current_selected_user])
-    end = perf_counter()
     print(f"Elapsed time to send (with encryption if any): {end-start}")
 
 
